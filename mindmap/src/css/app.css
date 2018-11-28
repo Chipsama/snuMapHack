@@ -88,14 +88,14 @@ html,body {
 }
 
 #toolbar {
-  background-color: rgb(253, 250, 250);
+  background-color: #232F34;
   overflow: hidden;
   width: 100%;
 }
 
 #toolbar .buttons {
   margin-top: 6px;
-}
+ }
 
 #toolbar .ui-buttonset {
   margin-right: 14px;
@@ -190,7 +190,7 @@ html,body {
 
 #drawing-area {
   position: absolute;
-  background-color: white;
+  background-color:#344955;
   background-size: 24px 24px;
   /* need this for webkit as well. */
   image-rendering: -moz-crisp-edges;

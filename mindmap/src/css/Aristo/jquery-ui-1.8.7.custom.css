@@ -84,13 +84,7 @@
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #B6B6B6; font-weight: normal; color: #4F4F4F; }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
 	background: url(images/bg_fallback.png) 0 0 repeat-x;
-	background: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(1, rgb(237,237,237)),
-    color-stop(0, rgb(196,196,196))
-	);
+	background: #f8585b
 	background: -moz-linear-gradient(
 		center top,
 		rgb(237,237,237),
