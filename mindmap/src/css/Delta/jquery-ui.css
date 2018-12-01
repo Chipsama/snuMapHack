@@ -59,7 +59,7 @@
 .ui-widget { font-family: Arial,Helvetica,sans-serif; font-size: 1.1em; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Arial,Helvetica,sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #D5D5D5; background: #ffffff; color: #222222; }
+.ui-widget-content { border: 1px solid #D5D5D5; background: rgba(55, 55, 64, 0.9); color: #cfcfcf; }
 .ui-widget-content a { color: #222222; }
 .ui-widget-header { border: 1px solid #D5D5D5; background: #cccccc; color: #222222; font-weight: bold; }
 .ui-widget-header { 
@@ -485,7 +485,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  */
 .ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: visible; border: 0 none; -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.75); -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.75); box-shadow: 0 1px 4px rgba(0,0,0,0.75); }
 .ui-dialog .ui-dialog-titlebar { position: relative; background: transparent !important; padding: 0 0 8px 0; margin: 20px 20px 5px 20px; border: solid #e5e5e5; border-width: 0 0 1px 0; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }
-.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; color: #353536; font-size: 20px !important; } 
+.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; color: #cacaca; font-size: 20px !important; } 
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: -32px; top: -32px; margin: 0; width: 30px; height: 30px; background: url(images/modalClose.png) 0 0 no-repeat; border: 0 !important; z-index: 10000;}
 .ui-dialog .ui-dialog-titlebar-close span { display: none; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }

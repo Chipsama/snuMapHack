@@ -74,7 +74,7 @@ html,body {
 }
 
 #toolbar {
-  background-color: rgb(253, 250, 250);
+  background-color: rgb(51, 51, 61);
   overflow: hidden;
   width: 100%;
 }
@@ -176,7 +176,7 @@ html,body {
 
 #drawing-area {
   position: absolute;
-  background-color: #344955;
+  background-color: rgb(66, 66, 80);
   background-size: 24px 24px;
   /* need this for webkit as well. */
   image-rendering: -moz-crisp-edges;
