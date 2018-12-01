@@ -4,7 +4,7 @@
 .node-text-behaviour {
   white-space: pre-wrap;
   word-wrap: break-word;
-  font-family: sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 /*
@@ -19,7 +19,7 @@
 */
 html,body {
   height: 100%; /* needed for container min-height */
-  font-family: sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 10px; /*conform with jquery-ui em settings */
 }
 

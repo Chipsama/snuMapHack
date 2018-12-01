@@ -76,7 +76,7 @@ strong {
 h1 {
   font-size: 52px;
   font-weight: bold;
-  font-family: sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   border-bottom: 4px solid #DDDDDD;
   color: #1C4257;
   text-shadow: 2px 1px 8px #75a8c4;
@@ -84,7 +84,7 @@ h1 {
 
 h2 {
   font-size: 24px;
-  font-family: sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   padding-bottom: 10px;
   font-weight: bold;
   color: #1C4257;
@@ -93,7 +93,7 @@ h2 {
 
 .text {
   font-size: 16px;
-  font-family: Georgia, serif;
+  font-family: "Noto Sans KR", sans-serif;
   line-height: 1.4em;
 }
 
@@ -140,7 +140,7 @@ h2 {
   left: 10px;
   font-size: 11px;
   color: #888;
-  font-family: sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   left: 10px;
 }
 

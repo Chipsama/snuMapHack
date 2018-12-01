@@ -10,6 +10,8 @@
 
 /* Layout helpers
 ----------------------------------*/
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
 .ui-helper-hidden { display: none; }
 .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
 .ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
@@ -56,9 +58,9 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: Arial,Helvetica,sans-serif; font-size: 1.1em; }
+.ui-widget { font-family: "Noto Sans KR", sans-serif; font-size: 1.1em; }
 .ui-widget .ui-widget { font-size: 1em; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Arial,Helvetica,sans-serif; font-size: 1em; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: "Noto Sans KR", sans-serif; font-size: 1em; }
 .ui-widget-content { border: 1px solid #D5D5D5; background: rgba(55, 55, 64, 0.9); color: #cfcfcf; }
 .ui-widget-content a { color: #222222; }
 .ui-widget-header { border: 1px solid #D5D5D5; background: #cccccc; color: #222222; font-weight: bold; }
