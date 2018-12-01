@@ -190,6 +190,7 @@ html,body {
 .mindmap .node-container {
   position: absolute;
   background-color: #e4e4e4;
+  border-radius: 8px 8px 8px 8px;
   /*padding-bottom: 2px;*/
   font-size: 15px;
 }
@@ -212,27 +213,30 @@ html,body {
 }
 
 .mindmap .node-caption:hover {
-  border: 2px dotted #DDD;
-  padding: 2px;
+  /*  border: 2px dotted #DDD;
+  padding: 2px;*/
+
 }
 
 .mindmap .node-caption.selected {
- 
+  /*   border-radius: 8px 8px 8px 8px;
   padding: 2px;
   z-index: 1000;
   webkit-box-shadow: 3px 3px 7px #828282;
   -moz-box-shadow: 3px 3px 7px #828282;
-  box-shadow: 3px 3px 7px #828282;
+  box-shadow: 3px 3px 7px #828282;*/
 }
 
 .mindmap .node-caption.edit {
-  border: 2px solid blue;
+  border-color: rgba(255, 0, 0, 0.514);
+  border: 1px;
+  border-radius: 8px 8px 8px 8px;
 }
 
 .mindmap .node-caption.root {
   cursor: default;
   background: white;
-  border: 3px solid orange;
+  border: 3px solid rgba(223, 52, 0, 0.664);
   border-radius: 10px 10px 10px 10px;
   left: -50px;
   position: absolute;
@@ -240,11 +244,15 @@ html,body {
 }
 
 .mindmap .node-caption.root.selected {
-  border-color: red;
+  border-color: rgba(255, 0, 0, 0.514);
+  border: 3px;
+  border-radius: 10px 10px 10px 10px;
 }
 
 .mindmap .node-caption.root.edit {
-  border-color: blue;
+  border-color: rgba(48, 0, 223, 0.664);
+  border: 3px solid;
+  border-radius: 10px 10px 10px 10px;
 }
 
 .mindmap .button-fold {
