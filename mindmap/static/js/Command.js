@@ -269,7 +269,7 @@ mindmaps.NewDocumentCommand.prototype = new mindmaps.Command();
  */
 mindmaps.OpenDocumentCommand = function() {
   this.id = "OPEN_DOCUMENT_COMMAND";
-  this.label = "Open...";
+  this.label = "살려줘";
   this.shortcut = ["ctrl+o", "meta+o"];
   this.icon = "ui-icon-folder-open";
   this.description = "Open an existing mind map";
@@ -330,7 +330,7 @@ mindmaps.HelpCommand.prototype = new mindmaps.Command();
 mindmaps.PrintCommand = function() {
   this.id = "PRINT_COMMAND";
   this.icon = "ui-icon-print";
-  this.label = "Print";
+  this.label = "i want to change";
   this.shortcut = ["ctrl+p", "meta+p"];
   this.description = "Print the mind map";
 };

@@ -16,8 +16,7 @@ mindmaps.Node = function() {
       /** unit: pixel */
       size : 15,
       color : "#000000"
-    },
-    description: "New description"
+    }
   };
   this.offset = new mindmaps.Point();
   this.foldChildren = false;

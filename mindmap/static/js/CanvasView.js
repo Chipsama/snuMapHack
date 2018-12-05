@@ -233,8 +233,12 @@ mindmaps.DefaultCanvasView = function() {
 
     $drawingArea.delegate("div.node-caption", "mouseover", function(e) {
       e.stopImmediatePropagation(300);
+
+      console.dir($(this));
       if (e.target === this) {
+        console.log("event occur in caption");
         var node = $(this).parent().data("node");
+        console.log(node.id);
         if (self.nodeCaptionMouseOver) {
           self.nodeCaptionMouseOver(node);
         }
@@ -457,73 +461,12 @@ mindmaps.DefaultCanvasView = function() {
     node.forEachChild(function(child) {
       self.createNode(child, $node, depth + 1);
     });
-    
+
     /* Liam, description 정보. */
-    var value_it;
     $m('#node-caption-'+node.id).attr("title", node.id);
     $m('#node-caption-'+node.id).tooltipster({
-      //custom: ' ...', title대신. ajax와 통신하는법 보기.
       theme: 'tooltipster-shadow',
-      maxWidth: 500,
-      minWidth: 200,
-      interactive: true,
-      trackOrigin: true,
-      trigger: 'custom',
-      triggerOpen: {
-        click: true
-      },
-      triggerClose: {
-        click: true
-      },
-      functionInit: function(instance, helper){
-        // to be fired only once at instantiation
-        $m('#node-caption-'+node.id).attr("tooltip_id", instance.__namespace);
-        instance.content(node.text.description);
-      },
-      functionBefore: function(instance){
-        //to be fired before the tooltip is opened
-        
-        //이거 전역함수인지, 로컬 어딘지 체크.
-        //버튼누르면 어딘가(저기)에서 데이터 받아오니까,
-        //전역변수인, var cur_mind 만들어서 거기에 json object넣고
-        //그걸로 읽어오자. 어처피 한 번에 하나의 json이니.
-        //그게 저 밑에 var doc으로 가져온 느낌으로 보면 되겠다.
-
-        //아니다. getJson까지 있는 저 과정은 딱히 뭐 필요 없어 보이는데? $가 다르게 정의된거 아니면
-        //그냥 쓰자.
-
-        //해당 노드 찾고, 거기 description에 추가하는 모델
-        //node의 생성자에 description추가 필요
-
-         
-      },
-      functionReady: function(){
-        //to be fired when the tooltip and its contents have been added to the DOM
-        //수정된 최신 정보 들고오기
-        var tooltip_id_is = $m('#node-caption-'+node.id).attr("tooltip_id");
-        var edit_selector = 'div[id="'+tooltip_id_is+'"]' + " > .tooltipster-box > .tooltipster-content" ;
-        $m(edit_selector).editable({type: "textarea", action: "click"}, function(e){
-          
-          console.log("e.value :" + e.value);
-          console.log("e.target :" + e.target); 
-          console.log("e.old_value :" + e.old_value); 
-          value_it = e.value;
-        });
-      },
-      functionAfter: function(instance){
-        /* 지금 실행순서를, close 전으로 바꿔놨음. 해보자. 으ㅏ아아아아아!!!했따 */
-        //to be fired once the tooltip has been closed and removed from the DOM. 
-        //> I, Liam, modified this method to be fired before close.
-        
-        
-        if(finish){
-          finish();
-        }
-        //for json저장
-        node.text.description = value_it;
-        //for 다음 툴팁 실행 때 뜨게 하려고.
-        instance.content(value_it); 
-      }
+      trigger: 'custom'
     });
     
 

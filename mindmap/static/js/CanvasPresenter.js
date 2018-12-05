@@ -65,7 +65,6 @@ mindmaps.CanvasPresenter = function(eventBus, commandRegistry, mindmapModel,
     // deselect old node
     if (oldSelectedNode) {
       view.unhighlightNode(oldSelectedNode);
-      
     }
     view.highlightNode(selectedNode);
   };
@@ -129,13 +128,8 @@ mindmaps.CanvasPresenter = function(eventBus, commandRegistry, mindmapModel,
      * @ignore
      */
     view.nodeMouseDown = function(node) {
-      /*Liam*/
-      //++다른 곳을 눌러서 tooltip을 껐을 때, tooltip 종료 함수 호출 전에 edit이 저장되도록 함수 짜자.
-
-        //여기서 값 저장 ㄱㄱ. using e.value ,
-        //e.target이 아마 edit_selector의 객체일 거다.
-        
-    
+      console.dir(node);
+      $m('#node-caption-'+node.id).tooltipster('open');
       mindmapModel.selectNode(node);
       // show creator
       creator.attachToNode(node);
@@ -150,25 +144,10 @@ mindmaps.CanvasPresenter = function(eventBus, commandRegistry, mindmapModel,
      * @ignore
      */
     view.nodeDoubleClicked = function(node) {
+      
       view.editNodeCaption(node);
     };
   } else {
-      /**
-       * View callback: Attach creator to node if mouse hovers over node caption.
-       * 
-       * @ignore
-       */ 
-      view.nodeCaptionMouseOver = function(node) {
-        if (view.isNodeDragging() || creator.isDragging()) {
-          // dont relocate the creator if we are dragging
-        } else {
-          creator.attachToNode(node);
-        }
-      };
-
-      view.nodeMouseDown = function(node) {
-        $m('#node-caption-'+node.id).tooltipster('open');
-      };
 
   }
 
