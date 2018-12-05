@@ -4,10 +4,10 @@
  * 
  * @constructor
  */
-
 mindmaps.OpenDocumentView = function() {
   var self = this;
 
+  // create dialog
   var $dialog = $("#template-open").tmpl().dialog({
     autoOpen : false,
     modal : true,
@@ -19,76 +19,36 @@ mindmaps.OpenDocumentView = function() {
     }
   });
 
-
-  $dialog.find('#example1').bind('click', function(e) {
-    console.log('something1');
-    if (self.openJSONFileClicked_1) {
-      self.openJSONFileClicked_1(e);
+  var $openCloudButton = $("#button-open-cloud").button().click(function() {
+    if (self.openCloudButtonClicked) {
+      self.openCloudButtonClicked();
     }
   });
 
-  $dialog.find('#example2').bind('click', function(e) {
-    console.log('something2');
-    if (self.openJSONFileClicked_2) {
-      self.openJSONFileClicked_2(e);
+  $dialog.find(".file-chooser input").bind("change", function(e) {
+    if (self.openExernalFileClicked) {
+      self.openExernalFileClicked(e);
     }
   });
 
-  $dialog.find('#example1').bind('ready', function(e) {
-    console.log('something1');
-    if (self.openJSONFileClicked_1) {
-      self.openJSONFileClicked_1(e);
+  var $table = $dialog.find(".localstorage-filelist");
+  $table.delegate("a.title", "click", function() {
+    if (self.documentClicked) {
+      var t = $(this).tmplItem();
+      self.documentClicked(t.data);
+    }
+  }).delegate("a.delete", "click", function() {
+    if (self.deleteDocumentClicked) {
+      var t = $(this).tmplItem();
+      self.deleteDocumentClicked(t.data);
     }
   });
 
-  $dialog.find('#example2').bind('ready', function(e) {
-    console.log('something');
-    if (self.openJSONFileClicked) {
-      self.openJSONFileClicked('example2', e);
-    }
-  });
-
-
-/*
-  $dialog.find('#example2').bind('ready', function(e) {
-    console.log('something2');
-    if (self.openJSONFileClicked_2) {
-      self.openJSONFileClicked_2(e);
-    }
-  });
-*/
-
-/*
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById("#example1").addEventListener('click',function (e)
-  {
-    console.log('something1');
-    if (self.openJSONFileClicked_1) {
-      self.openJSONFileClicked_1(e);
-    }
-  }  ); 
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById("#example2").addEventListener('click',function (e)
-  {
-    console.log('something2');
-    if (self.openJSONFileClicked_2) {
-      self.openJSONFileClicked_2(e);
-    }
-  }  ); 
-});
-*/
-
-  /*jsy
-  
   /**
   * Render list of documents in the local storage
   * 
   * @param {mindmaps.Document[]} docs
   */
-
-  
   this.render = function(docs) {
     // empty list and insert list of documents
     var $list = $(".document-list", $dialog).empty();
@@ -104,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }).appendTo($list);
   };
-  
+
   /**
   * Shows the dialog.
   * 
@@ -122,6 +82,19 @@ document.addEventListener('DOMContentLoaded', function() {
     $dialog.dialog("close");
   };
 
+  this.showCloudError = function(msg) {
+    $dialog.find('.cloud-loading').removeClass('loading');
+    $dialog.find('.cloud-error').text(msg);
+  };
+
+  this.showCloudLoading = function() {
+    $dialog.find('.cloud-error').text('');
+    $dialog.find('.cloud-loading').addClass('loading');
+  };
+
+  this.hideCloudLoading = function() {
+    $dialog.find('.cloud-loading').removeClass('loading');
+  };
 };
 
 /**
@@ -136,66 +109,39 @@ document.addEventListener('DOMContentLoaded', function() {
 */
 mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePicker) {
 
-
-
-
-
   /**
    * Open file via cloud
    */
+  view.openCloudButtonClicked = function(e) {
+    mindmaps.Util.trackEvent("Clicks", "cloud-open");
+    mindmaps.Util.trackEvent("CloudOpen", "click");
 
+    filePicker.open({
+      load: function() {
+        view.showCloudLoading();
+      },
+      cancel: function () {
+        view.hideCloudLoading();
+        mindmaps.Util.trackEvent("CloudOpen", "cancel");
+      },
+      success: function() {
+        view.hideOpenDialog();
+        mindmaps.Util.trackEvent("CloudOpen", "success");
+      },
+      error: function(msg) {
+        view.showCloudError(msg);
+        mindmaps.Util.trackEvent("CloudOpen", "error", msg);
+      }
+    });
+  };
+
+  // http://www.w3.org/TR/FileAPI/#dfn-filereader
   /**
   * View callback: external file has been selected. Try to read and parse a
   * valid mindmaps Document.
   * 
   * @ignore
   */
-
-  //승영이의 코드
-
-  view.openJSONFileClicked = function(name , e) {
-
-    console.log('openjson');
-    var file_path = 'maps/' + name + '.json'
-    $.getJSON(file_path, function (data) {
-    
-    var doc = mindmaps.Document.fromObject(data);
-    mindmapModel.setDocument(doc);
-    view.hideOpenDialog();
-    
-  });
-}
-
-
-  view.openJSONFileClicked_1 = function(e) {
-
-        console.log('openjson1');
-        $.getJSON('maps/example1.json', function (data) {
-        
-        var doc = mindmaps.Document.fromObject(data);
-        mindmapModel.setDocument(doc);
-        view.hideOpenDialog();
-        
-      });
-  }
-  
-  view.openJSONFileClicked_2 = function(e) {
-    console.log('openjson2');
-    $.getJSON('maps/example2.json', function (data) {
-    
-    var doc = mindmaps.Document.fromObject(data);
-    mindmapModel.setDocument(doc);
-    view.hideOpenDialog();
-    
-  });    
-  }
-
-
-
-
-//승영이의 코드
-
-
   view.openExernalFileClicked = function(e) {
     mindmaps.Util.trackEvent("Clicks", "hdd-open");
 
@@ -206,7 +152,6 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
     reader.onload = function() {
       try {
         var doc = mindmaps.Document.fromJSON(reader.result);
-
       } catch (e) {
         eventBus.publish(mindmaps.Event.NOTIFICATION_ERROR, 'File is not a valid mind map!');
         throw new Error('Error while opening map from hdd', e);
@@ -225,7 +170,12 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
   * @ignore
   * @param {mindmaps.Document} doc
   */
-
+  view.documentClicked = function(doc) {
+    mindmaps.Util.trackEvent("Clicks", "localstorage-open");
+    
+    mindmapModel.setDocument(doc);
+    view.hideOpenDialog();
+  };
 
   /**
   * View callback: The delete link the local storage list has been clicked.
@@ -234,21 +184,21 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
   * @ignore
   * @param {mindmaps.Document} doc
   */
+  view.deleteDocumentClicked = function(doc) {
+    // TODO event
+    mindmaps.LocalDocumentStorage.deleteDocument(doc);
 
+    // re-render view
+    var docs = mindmaps.LocalDocumentStorage.getDocuments();
+    view.render(docs);
+  };
 
   /**
   * Initialize.
   */
- 
   this.go = function() {
     var docs = mindmaps.LocalDocumentStorage.getDocuments();
     docs.sort(mindmaps.Document.sortByModifiedDateDescending);
     view.showOpenDialog(docs);
   };
-  
 };
-
-
-
-
-
