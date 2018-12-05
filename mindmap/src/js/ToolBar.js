@@ -264,35 +264,42 @@ mindmaps.ToolBarPresenter = function(eventBus, commandRegistry, view,
   // populate toolbar
 
   // node buttons
-  var nodeCommands = [ mindmaps.CreateNodeCommand, mindmaps.DeleteNodeCommand ];
-  var nodeButtons = commandsToButtons(nodeCommands);
-  view.addButtonGroup(nodeButtons, view.alignLeft);
+  /*
+    LIAM! 조건문 만들어서 권한 없는(view만 되는)애들은 이거 활성화 안되게.
+    이 밑에, authorization 이거 이하 조건문 보고싶으면 1로 바꾸면 됨. 그럼 editor모드 됨.
+  */
+  if(authorization == 1){
 
-  // undo buttons
-  var undoCommands = [ mindmaps.UndoCommand, mindmaps.RedoCommand ];
-  var undoButtons = commandsToButtons(undoCommands);
-  view.addButtonGroup(undoButtons, view.alignLeft);
-
-  // clipboard buttons.
-  var clipboardCommands = [ mindmaps.CopyNodeCommand,
-      mindmaps.CutNodeCommand, mindmaps.PasteNodeCommand ];
-  var clipboardButtons = commandsToButtons(clipboardCommands);
-  view.addButtonGroup(clipboardButtons, view.alignLeft);
-
-  // file menu
-  var fileMenu = new mindmaps.ToolBarMenu("Mind map", "ui-icon-document");
-  var fileCommands = [ mindmaps.NewDocumentCommand,
+      var nodeCommands = [ mindmaps.CreateNodeCommand, mindmaps.DeleteNodeCommand ];
+      var nodeButtons = commandsToButtons(nodeCommands);
+      view.addButtonGroup(nodeButtons, view.alignLeft);
+      
+      // undo buttons
+      var undoCommands = [ mindmaps.UndoCommand, mindmaps.RedoCommand ];
+      var undoButtons = commandsToButtons(undoCommands);
+      view.addButtonGroup(undoButtons, view.alignLeft);
+      
+      // clipboard buttons.
+      var clipboardCommands = [ mindmaps.CopyNodeCommand,
+        mindmaps.CutNodeCommand, mindmaps.PasteNodeCommand ];
+    var clipboardButtons = commandsToButtons(clipboardCommands);
+    view.addButtonGroup(clipboardButtons, view.alignLeft);
+    
+    // file menu
+    var fileMenu = new mindmaps.ToolBarMenu("Mind map", "ui-icon-document");
+    var fileCommands = [ mindmaps.NewDocumentCommand,
       mindmaps.OpenDocumentCommand, mindmaps.SaveDocumentCommand,
       mindmaps.ExportCommand, mindmaps.PrintCommand,
       mindmaps.CloseDocumentCommand ];
-  var fileButtons = commandsToButtons(fileCommands);
-  fileMenu.add(fileButtons);
-  view.addMenu(fileMenu);
-
-  // help button
-  view.addButton(commandToButton(mindmaps.HelpCommand), view.alignRight);
-
-  this.go = function() {
+      var fileButtons = commandsToButtons(fileCommands);
+      fileMenu.add(fileButtons);
+      view.addMenu(fileMenu);
+  }
+    
+    // help button
+    view.addButton(commandToButton(mindmaps.HelpCommand), view.alignRight);
+    
+    this.go = function() {
     view.init();
   };
 };

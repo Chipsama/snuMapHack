@@ -97,7 +97,7 @@ EventEmitter.mixin(mindmaps.Command);
 mindmaps.CreateNodeCommand = function() {
   this.id = "CREATE_NODE_COMMAND";
   this.shortcut = "tab";
-  this.label = "Add";
+  this.label = "노드 추가";
   this.icon = "ui-icon-plusthick";
   this.description = "노드를 추가합니다.";
 };

@@ -218,7 +218,10 @@ mindmaps.DefaultCanvasView = function() {
     });
 
     $drawingArea.delegate("div.node-container", "mouseover", function(e) {
+      e.stopImmediatePropagation(300);
       if (e.target === this) {
+        console.log("event occur in container");
+        
         var node = $(this).data("node");
         if (self.nodeMouseOver) {
           self.nodeMouseOver(node);
@@ -226,12 +229,25 @@ mindmaps.DefaultCanvasView = function() {
       }
       return false;
     });
+    
 
     $drawingArea.delegate("div.node-caption", "mouseover", function(e) {
+      e.stopImmediatePropagation(300);
       if (e.target === this) {
         var node = $(this).parent().data("node");
         if (self.nodeCaptionMouseOver) {
           self.nodeCaptionMouseOver(node);
+        }
+      }
+      
+      return false;
+    });
+    /* Liam */
+    $drawingArea.delegate("div.node-caption", "mouseleave", function(e) {
+      if (e.target === this) {
+        var node = $(this).parent().data("node");
+        if (self.nodeCaptionMouseLeave) {
+          self.nodeCaptionMouseLeave(node);
         }
       }
       return false;
@@ -349,6 +365,8 @@ mindmaps.DefaultCanvasView = function() {
        * up loading of big maps.
        */
       $node.one("mouseenter", function() {
+        /*liam!! */
+
         $node.draggable({
           // could be set
           // revert: true,
@@ -439,6 +457,66 @@ mindmaps.DefaultCanvasView = function() {
     node.forEachChild(function(child) {
       self.createNode(child, $node, depth + 1);
     });
+
+    /* Liam, description 정보. */
+    var test = 0;
+    $m('#node-caption-'+node.id).attr("title", node.id);
+    $m('#node-caption-'+node.id).tooltipster({
+      //custom: ' ...', title대신. ajax와 통신하는법 보기.
+      theme: 'tooltipster-shadow',
+      maxWidth: 500,
+      minWidth: 200,
+      interactive: true,
+      trackOrigin: true,
+      trigger: 'custom',
+      triggerOpen: {
+        click: true
+      },
+      triggerClose: {
+        click: false
+      },
+      functionInit: function(instance, helper){
+        // to be fired only once at instantiation
+        $m('#node-caption-'+node.id).attr("tooltip_id", instance.__namespace);
+        instance.content('My new content');
+        //+json에서 최신 들고오기
+      },
+      functionBefore: function(){
+        //to be fired before the tooltip is opened
+        //여기서 editable 실행하자.
+        
+      },
+      functionReady: function(){
+        //to be fired when the tooltip and its contents have been added to the DOM
+        //수정된 최신 정보 들고오기
+        
+        var tooltip_id_is = $m('#node-caption-'+node.id).attr("tooltip_id");
+        var edit_selector = 'div[id="'+tooltip_id_is+'"]' + " > .tooltipster-box > .tooltipster-content" ;
+        $m(edit_selector).editable({type: "textarea", action: "click"}, function(e){
+          
+          console.log("e.value :" + e.value);
+          console.log("e.target :" + e.target); 
+          console.log("e.old_value :" + e.old_value); 
+        });
+      },
+      functionAfter: function(instance){
+        /* 지금 실행순서를, close 전으로 바꿔놨음. 해보자. 으ㅏ아아아아아!!!했따 */
+        //to be fired once the tooltip has been closed and removed from the DOM. 
+        //> I, Liam, modified this method to be fired before close.
+        //수정한 사항 저장하기. << 이거 없어지기 전에 해야하는디..
+        //editable blur가 아니면 안없어지게 하자.(즉 focus인 동안 유지되는 변수 써보자.)
+
+        //근데 여기서 저장한다고 해도. editable에서 적합하게 종료되면서 저장이 돼야 여기서 주는데.
+        instance.content(test++); 
+        //여기서 editable의 finish를 호출하고
+        //finish에 컨텐츠 저장만 만들면.
+        //그리고 그 저장한걸 여기서 json으로 바꾸고!
+        //
+
+      }
+    });
+    
+
   };
 
   /**

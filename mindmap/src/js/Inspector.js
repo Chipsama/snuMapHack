@@ -3,6 +3,7 @@
  * 
  * @constructor
  */
+
 mindmaps.InspectorView = function() {
   var self = this;
   var $content = $("#template-inspector").tmpl();

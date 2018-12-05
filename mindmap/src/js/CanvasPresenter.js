@@ -65,6 +65,7 @@ mindmaps.CanvasPresenter = function(eventBus, commandRegistry, mindmapModel,
     // deselect old node
     if (oldSelectedNode) {
       view.unhighlightNode(oldSelectedNode);
+      
     }
     view.highlightNode(selectedNode);
   };
@@ -85,57 +86,91 @@ mindmaps.CanvasPresenter = function(eventBus, commandRegistry, mindmapModel,
     }
   };
 
-  /**
-   * View callback: Attach creator to node if mouse hovers over node.
-   * 
-   * @ignore
+  /*
+   LIAM! 조건문 만들어서 권한 없는(view만 되는)애들은 이거 활성화 안되게.
+   이 밑에, authorization 이거 이하 조건문 보고싶으면 1로 바꾸면 됨. 그럼 editor모드 됨.
+   >>authorization 관리하는 곳이 필요. 거기서만 관리해야지. 
+   member.js 만들어서 회원가입 및 authorization관리해주자.
    */
-  view.nodeMouseOver = function(node) {
-    if (view.isNodeDragging() || creator.isDragging()) {
-      // dont relocate the creator if we are dragging
-    } else {
+  /*여기서 Canvas에서의 interface를 관리해주네. */
+
+  if(authorization == 1){
+    /**
+     * View callback: Attach creator to node if mouse hovers over node.
+     * 
+     * @ignore
+     */
+
+    view.nodeMouseOver = function(node) {
+      if (view.isNodeDragging() || creator.isDragging()) {
+        // dont relocate the creator if we are dragging
+      } else {
+        creator.attachToNode(node);
+      }
+    };
+      
+    /**
+     * View callback: Attach creator to node if mouse hovers over node caption.
+     * 
+     * @ignore
+     */ 
+    view.nodeCaptionMouseOver = function(node) {
+      
+      if (view.isNodeDragging() || creator.isDragging()) {
+        // dont relocate the creator if we are dragging
+      } else {
+        creator.attachToNode(node);
+      }
+    };
+    
+    /**
+     * View callback: Select node if mouse was pressed.
+     * 
+     * @ignore
+     */
+    view.nodeMouseDown = function(node) {
+      /*Liam*/
+      //++다른 곳을 눌러서 tooltip을 껐을 때, tooltip 종료 함수 호출 전에 edit이 저장되도록 함수 짜자.
+
+        //여기서 값 저장 ㄱㄱ. using e.value ,
+        //e.target이 아마 edit_selector의 객체일 거다.
+        
+    
+      mindmapModel.selectNode(node);
+      // show creator
       creator.attachToNode(node);
-    }
-  };
+    };
 
-  /**
-   * View callback: Attach creator to node if mouse hovers over node caption.
-   * 
-   * @ignore
-   */
-  view.nodeCaptionMouseOver = function(node) {
-    if (view.isNodeDragging() || creator.isDragging()) {
-      // dont relocate the creator if we are dragging
-    } else {
-      creator.attachToNode(node);
-    }
-  };
+    // view.nodeMouseUp = function(node) {
+    // };
 
-  /**
-   * View callback: Select node if mouse was pressed.
-   * 
-   * @ignore
-   */
-  view.nodeMouseDown = function(node) {
-    mindmapModel.selectNode(node);
-    // show creator
-    creator.attachToNode(node);
-  };
+    /**
+     * View callback: Go into edit mode when node was double clicked.
+     * 
+     * @ignore
+     */
+    view.nodeDoubleClicked = function(node) {
+      view.editNodeCaption(node);
+    };
+  } else {
+      /**
+       * View callback: Attach creator to node if mouse hovers over node caption.
+       * 
+       * @ignore
+       */ 
+      view.nodeCaptionMouseOver = function(node) {
+        if (view.isNodeDragging() || creator.isDragging()) {
+          // dont relocate the creator if we are dragging
+        } else {
+          creator.attachToNode(node);
+        }
+      };
 
-  // view.nodeMouseUp = function(node) {
-  // };
+      view.nodeMouseDown = function(node) {
+        $m('#node-caption-'+node.id).tooltipster('open');
+      };
 
-  /**
-   * View callback: Go into edit mode when node was double clicked.
-   * 
-   * @ignore
-   */
-  view.nodeDoubleClicked = function(node) {
-    view.editNodeCaption(node);
-  };
-
-  // view.nodeDragging = function() {
-  // };
+  }
 
   /**
    * View callback: Execute MoveNodeAction when node was dragged.

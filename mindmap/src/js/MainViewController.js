@@ -149,17 +149,25 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
 
     // floating Panels
     var fpf = new mindmaps.FloatPanelFactory(canvasContainer);
-
-    // inspector
-    var inspectorView = new mindmaps.InspectorView();
-    var inspectorPresenter = new mindmaps.InspectorPresenter(eventBus,
+    /*
+    LIAM! 조건문 만들어서 권한 없는(view만 되는)애들은 이거 활성화 안되게.
+    이 밑에, authorization 이거 이하 조건문 보고싶으면 1로 바꾸면 됨. 그럼 editor모드 됨.
+    >>authorization 관리하는 곳이 필요. 거기서만 관리해야지. 
+    member.js 만들어서 회원가입 및 authorization관리해주자.
+    */
+   /*여기서 panel들의 생성을 관리해주네. */
+    if(authorization == 1){
+      // inspector
+      var inspectorView = new mindmaps.InspectorView();
+      var inspectorPresenter = new mindmaps.InspectorPresenter(eventBus,
         mindmapModel, inspectorView);
-    inspectorPresenter.go();
-
-    var inspectorPanel = fpf
+        inspectorPresenter.go();
+        
+        var inspectorPanel = fpf
         .create("Inspector", inspectorView.getContent());
-    inspectorPanel.show();
-    statusbarPresenter.addEntry(inspectorPanel);
+        inspectorPanel.show();
+        statusbarPresenter.addEntry(inspectorPanel);
+    }
 
     // navigator
     var naviView = new mindmaps.NavigatorView();
