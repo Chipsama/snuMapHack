@@ -8,18 +8,6 @@ mindmaps.OpenDocumentView = function() {
   var self = this;
 
   // create dialog
-  /*backup
-  var $dialog = $("#template-open").tmpl().dialog({
-    autoOpen : false,
-    modal : true,
-    zIndex : 5000,
-    width : 550,
-    close : function() {
-      $(this).dialog("destroy");
-      $(this).remove();
-    }
-  });
-  backup*/
   var $dialog = $("#template-open").tmpl().dialog({
     autoOpen : false,
     modal : true,
@@ -31,44 +19,17 @@ mindmaps.OpenDocumentView = function() {
     }
   });
 
-
-  $dialog.find('#get-data').bind('click', function(e) {
-    console.log('something');
-    if (self.openJSONFileClicked) {
-      self.openJSONFileClicked(e);
-    }
-  });
-
-  /*jsy
-  
   var $openCloudButton = $("#button-open-cloud").button().click(function() {
     if (self.openCloudButtonClicked) {
       self.openCloudButtonClicked();
     }
   });
-  jsy*/
-  /*backup
+
   $dialog.find(".file-chooser input").bind("change", function(e) {
-    console.log('something');
     if (self.openExernalFileClicked) {
       self.openExernalFileClicked(e);
     }
   });
-  backup*/
-
-  //승영코드
-  /*
-  $(document).on('#get-data', 'click', function(e) {
-    console.log('something');
-    if (self.openJSONFileClicked) {
-      self.openJSONFileClicked(e);
-    }
-  });
-  */
-  //승영코드
-  
-
- /*jsy
 
   var $table = $dialog.find(".localstorage-filelist");
   $table.delegate("a.title", "click", function() {
@@ -82,14 +43,12 @@ mindmaps.OpenDocumentView = function() {
       self.deleteDocumentClicked(t.data);
     }
   });
-jsy*/
+
   /**
   * Render list of documents in the local storage
   * 
   * @param {mindmaps.Document[]} docs
   */
-
-  
   this.render = function(docs) {
     // empty list and insert list of documents
     var $list = $(".document-list", $dialog).empty();
@@ -105,7 +64,7 @@ jsy*/
       }
     }).appendTo($list);
   };
-  
+
   /**
   * Shows the dialog.
   * 
@@ -122,7 +81,7 @@ jsy*/
   this.hideOpenDialog = function() {
     $dialog.dialog("close");
   };
-  /*jsy
+
   this.showCloudError = function(msg) {
     $dialog.find('.cloud-loading').removeClass('loading');
     $dialog.find('.cloud-error').text(msg);
@@ -136,8 +95,6 @@ jsy*/
   this.hideCloudLoading = function() {
     $dialog.find('.cloud-loading').removeClass('loading');
   };
-
-  jsy*/
 };
 
 /**
@@ -152,15 +109,9 @@ jsy*/
 */
 mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePicker) {
 
-
-
-
-
   /**
    * Open file via cloud
    */
-
-  /*jsy
   view.openCloudButtonClicked = function(e) {
     mindmaps.Util.trackEvent("Clicks", "cloud-open");
     mindmaps.Util.trackEvent("CloudOpen", "click");
@@ -184,8 +135,6 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
     });
   };
 
-  jsy*/
-
   // http://www.w3.org/TR/FileAPI/#dfn-filereader
   /**
   * View callback: external file has been selected. Try to read and parse a
@@ -193,8 +142,6 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
   * 
   * @ignore
   */
-
-  /*backup
   view.openExernalFileClicked = function(e) {
     mindmaps.Util.trackEvent("Clicks", "hdd-open");
 
@@ -205,51 +152,6 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
     reader.onload = function() {
       try {
         var doc = mindmaps.Document.fromJSON(reader.result);
-
-      } catch (e) {
-        eventBus.publish(mindmaps.Event.NOTIFICATION_ERROR, 'File is not a valid mind map!');
-        throw new Error('Error while opening map from hdd', e);
-      }
-      mindmapModel.setDocument(doc);
-      view.hideOpenDialog();
-    };
-
-    reader.readAsText(file);
-  };
-  backup*/
-
-  //승영이의 코드
-
-
-  view.openJSONFileClicked = function(e) {
-
-   
-        $.getJSON('example.json', function (data) {
-        
-        var doc = mindmaps.Document.fromObject(data);
-        mindmapModel.setDocument(doc);
-        
-      });
-    
-        
-  }
-  
-
-
-//승영이의 코드
-
-
-  view.openExernalFileClicked = function(e) {
-    mindmaps.Util.trackEvent("Clicks", "hdd-open");
-
-    var files = e.target.files;
-    var file = files[0];
-
-    var reader = new FileReader();
-    reader.onload = function() {
-      try {
-        var doc = mindmaps.Document.fromJSON(reader.result);
-
       } catch (e) {
         eventBus.publish(mindmaps.Event.NOTIFICATION_ERROR, 'File is not a valid mind map!');
         throw new Error('Error while opening map from hdd', e);
@@ -268,15 +170,12 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
   * @ignore
   * @param {mindmaps.Document} doc
   */
-
-  /*jsy
   view.documentClicked = function(doc) {
     mindmaps.Util.trackEvent("Clicks", "localstorage-open");
     
     mindmapModel.setDocument(doc);
     view.hideOpenDialog();
   };
-  jsy*/
 
   /**
   * View callback: The delete link the local storage list has been clicked.
@@ -285,8 +184,6 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
   * @ignore
   * @param {mindmaps.Document} doc
   */
-
-  /*jsy
   view.deleteDocumentClicked = function(doc) {
     // TODO event
     mindmaps.LocalDocumentStorage.deleteDocument(doc);
@@ -295,16 +192,13 @@ mindmaps.OpenDocumentPresenter = function(eventBus, mindmapModel, view, filePick
     var docs = mindmaps.LocalDocumentStorage.getDocuments();
     view.render(docs);
   };
-  jsy*/
 
   /**
   * Initialize.
   */
- 
   this.go = function() {
     var docs = mindmaps.LocalDocumentStorage.getDocuments();
     docs.sort(mindmaps.Document.sortByModifiedDateDescending);
     view.showOpenDialog(docs);
   };
-  
 };

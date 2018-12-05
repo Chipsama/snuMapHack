@@ -149,6 +149,7 @@ mindmaps.ToolBarButton.prototype.asJquery = function() {
     id : this.getId(),
     title : this.getToolTip()
   }).click(function() {
+    console.dir(self);
     self.click();
   }).button({
     label : this.getTitle(),

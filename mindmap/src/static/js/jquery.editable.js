@@ -6,6 +6,8 @@
 /* Liam */
 var current = 0;
 
+var finish;
+
 (function($){
   var escape_html = function(str){
     return str.replace(/</gm, '&lt;').replace(/>/gm, '&gt;');
@@ -57,8 +59,10 @@ var current = 0;
         css('margin',0).attr('id','editable_'+(new Date()*1)).
         addClass('editable');
       if(type === 'textarea') input.css('height', target.height());
-      
-      var finish = function(e){
+
+      console.log("finish is before : " + finish);
+
+      finish = function(e){
         var result = input.val().replace(/^\s+/,'').replace(/\s+$/,'');
         var html = escape_html(result);
         if(type === 'textarea') html = html.replace(/[\r\n]/gm, '<br />');
@@ -71,11 +75,12 @@ var current = 0;
         edit.register(); // for rebind
         if(trigger !== target) trigger.show();
       };
-      
+
+      console.log("finish is after : " + finish);
+
       input.blur(finish); // listener with handler
       
       $(window.document.body).on("click", function(event) {
-          /*Liam, 노드 & 툴팁 외의 화면을 클릭할 경우 사라지도록. */
           if(!($(event.target).hasClass("tooltipstered") || 
           $(event.target).parents('.tooltipster-base').length > 0)) {
             input.blur();

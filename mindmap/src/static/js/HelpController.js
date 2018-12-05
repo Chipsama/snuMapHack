@@ -185,33 +185,13 @@ mindmaps.HelpController = function(eventBus, commandRegistry) {
   function setupHelpButton() {
     var command = commandRegistry.get(mindmaps.HelpCommand);
     command.setHandler(showHelp);
-    
+
     var notifications = [];
     function showHelp() {
-     /* //sysy
-        console.log('fuck')
-        var datas =function () {
-          $.getJSON('fuckyou.json', function (data) {
-            console.log(data)
-            var getfile = data;
-            var doc = mindmaps.Document.fromJSON(getfile);
-            mindmapModel.setDocument(doc);
-          });
-        
-        return getfile;
-        };
-
-        datas();
-        
-        */
-      //sysy
       // true if atleast one notifications is still on screen
-
-      
       var displaying = notifications.some(function(noti) {
         return noti.isVisible();
       });
-    
 
       // hide notifications if visible
       if (displaying) {
@@ -271,8 +251,7 @@ mindmaps.HelpController = function(eventBus, commandRegistry) {
 
       notifications.push(helpRoot, helpNavigator, helpInspector,
           helpToolbar);
-    } 
-
+    }
   }
 
   setupInteractiveMode();

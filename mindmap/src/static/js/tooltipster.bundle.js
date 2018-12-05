@@ -4,10 +4,6 @@
  * Developed by Caleb Jacob and Louis Ameline
  * MIT license
  */
-//liam
-{
-
-
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module unless amdModuleId is set
@@ -1451,6 +1447,7 @@ $.Tooltipster.prototype = {
 	 * @returns {self}
 	 * @protected
 	 */
+	/* Liam */
 	_close: function(event, callback, force) {
 		
 		var self = this,
@@ -1527,6 +1524,7 @@ $.Tooltipster.prototype = {
 					}
 					
 					var finish = function() {
+						/* Liam */ 
 						
 						// stop the tracker
 						clearInterval(self.__tracker);
@@ -1577,12 +1575,15 @@ $.Tooltipster.prototype = {
 						});
 						
 						// call our constructor custom callback function
+						/*Liam, it's hacking */
+						/*
 						if (self.__options.functionAfter) {
 							self.__options.functionAfter.call(self, self, {
 								event: event,
 								origin: self._$origin[0]
 							});
 						}
+						*/
 						
 						// call our method custom callbacks functions
 						finishCallbacks();
@@ -2015,13 +2016,26 @@ $.Tooltipster.prototype = {
 										}
 										
 										$body.on(eventNames, function(event) {
-											
 											if (self._touchIsMeaningfulEvent(event)) {
-												
-												self._touchRecordEvent(event);
-												
-												if (!self.__options.interactive || !$.contains(self._$tooltip[0], event.target)) {
-													self._close(event);
+												/*Liam, 노드 & 툴팁 외의 화면을 클릭할 경우 사라지도록. */
+												if(!($(event.target).hasClass("tooltipstered") || 
+												$(event.target).parents('.tooltipster-base').length > 0)) {
+													self._touchRecordEvent(event);
+													if (!self.__options.interactive || !$.contains(self._$tooltip[0], event.target)) {
+														console.log(event);
+														console.log(self);
+														console.log(eventNames);
+														console.dir(event);
+														console.dir(self);
+														console.dir(eventNames);
+														if (self.__options.functionAfter) {
+															self.__options.functionAfter.call(self, self, {
+																event: event,
+																origin: self._$origin[0]
+															});
+														}
+														self._close(event);
+													}
 												}
 											}
 										});
@@ -2033,6 +2047,7 @@ $.Tooltipster.prototype = {
 												self._touchRecordEvent(event);
 											});
 										}
+										
 									}
 								}, 0);
 							}
@@ -2505,6 +2520,7 @@ $.Tooltipster.prototype = {
 	 * @returns {self}
 	 * @public
 	 */
+	/* Liam */
 	destroy: function() {
 		
 		var self = this;
@@ -4275,4 +4291,3 @@ $.tooltipster._plugin({
 return $;
 
 }));
-}
